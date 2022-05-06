@@ -2,13 +2,13 @@ FROM tiredofit/debian:buster
 LABEL maintainer="Dave Conroy (dave at tiredofit dot ca)"
 
 ### Set defaults
-ENV ASTERISK_VERSION=17.9.4 \
+ENV ASTERISK_VERSION=18.10.0 \
     BCG729_VERSION=1.0.4 \
     DONGLE_VERSION=20200610 \
     G72X_CPUHOST=penryn \
     G72X_VERSION=0.1 \
     MONGODB_VERSION=4.2 \
-    PHP_VERSION=5.6 \
+    PHP_VERSION=7.4 \
     SPANDSP_VERSION=20180108 \
     RTP_START=18000 \
     RTP_FINISH=20000
@@ -179,9 +179,11 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     mkdir -p asterisk && \
     curl -sSLk http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-${ASTERISK_VERSION}.tar.gz | tar xvfz - --strip 1 -C /usr/src/asterisk && \
     cd /usr/src/asterisk/ && \
+    curl -sSLk https://raw.githubusercontent.com/usecallmanagernz/patches/master/asterisk/cisco-usecallmanager-${ASTERISK_VERSION}.patch | patch -p1 -b && \
     make distclean && \
     contrib/scripts/get_mp3_source.sh && \
     cd /usr/src/asterisk && \
+    CFLAGS="-DENABLE_SRTP_AES_GCM -DENABLE_SRTP_AES_256" \
     ./configure \
         --with-jansson-bundled \
         --with-pjproject-bundled \
@@ -229,6 +231,7 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     make install && \
     make install-headers && \
     make config && \
+    make samples && \
     \
 #### Add G729 codecs
     git clone https://github.com/BelledonneCommunications/bcg729 /usr/src/bcg729 && \

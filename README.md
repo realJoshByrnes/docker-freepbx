@@ -1,4 +1,4 @@
-# github.com/tiredofit/docker-freepbx
+# github.com/realJoshByrnes/docker-freepbx
 
 [![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-freepbx?style=flat-square)](https://github.com/tiredofit/docker-freepbx/releases/latest)
 [![Build Status](https://img.shields.io/github/workflow/status/tiredofit/docker-freepbx/build?style=flat-square)](https://github.com/tiredofit/docker-freepbx/actions?query=workflow%3Abuild)
@@ -11,11 +11,14 @@
 
 ## Introduction
 
+Note: This is a fork of https://github.com/tiredofit/docker-freepbx just to enable Cisco device support.
+If you do not require cisco device support, please use the (likely more recently updated) parent repository.
+
 Dockerfile to build a [FreePBX](https://www.freepbx.org) - A Voice over IP manager for Asterisk.
 Upon starting this image it will give you a turn-key PBX system for SIP calling.
 
-* Latest release FreePBX 15
-* Latest release Asterisk 17
+* FreePBX 16 (16.0.19.6)
+* Asterisk 18 (18.10.0) [patched for Cisco devices](https://github.com/usecallmanagernz/patches)
 * Choice of running embedded database or modifies to support external MariaDB Database and only require one DB.
 * Supports data persistence
 * Fail2Ban installed to block brute force attacks
@@ -33,7 +36,7 @@ Asterisk 14 and can no longer use your image, please see [this post](https://git
 
 ## Maintainer
 
-- [Dave Conroy](https://github.com/tiredofit)
+- [Josh 'JD' Byrnes](https://github.com/realJoshByrnes)
 
 ## Table of Contents
 
@@ -88,9 +91,7 @@ The following image tags are available along with their tagged release based on 
 
 | Version | Container OS | FreePBX Version | Tag      |
 | ------- | ------------ | --------------- | -------- |
-| latest  | Debian       | 15.x            | `latest` |
-| 15      | Debian       | 15.x            | `15`     |
-| 14      | Debian       | 14.x            | `14`     |
+| latest  | Debian       | 16.x            | `latest` |
 
 
 ## Configuration
